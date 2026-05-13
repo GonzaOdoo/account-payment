@@ -431,17 +431,17 @@ class AccountPayment(models.Model):
             if len(accounts) > 1 and not self.env.context.get("default_mode") == "check_balance":
                 raise ValidationError(_("To Pay Lines must be of the same account!"))
 
-    @api.constrains("to_pay_move_line_ids", "counterpart_currency_id")
-    def _check_to_pay_lines_currency(self):
-        for rec in self:
-            if rec.company_id.reconcile_on_company_currency:
-                continue
-            currencies = rec.to_pay_move_line_ids.mapped("currency_id")
-            if len(currencies) > 1:
-                raise ValidationError(
-                    _("All selected debt lines must have the same currency. Found: %s")
-                    % ", ".join(currencies.mapped("name"))
-                )
+    #@api.constrains("to_pay_move_line_ids", "counterpart_currency_id")
+    #def _check_to_pay_lines_currency(self):
+    #    for rec in self:
+    #        if rec.company_id.reconcile_on_company_currency:
+    #            continue
+    #        currencies = rec.to_pay_move_line_ids.mapped("currency_id")
+    #        if len(currencies) > 1:
+    #            raise ValidationError(
+    #                _("All selected debt lines must have the same currency. Found: %s")
+    #                % ", ".join(currencies.mapped("name"))
+    #            )
 
     def action_draft(self):
         # Seteamos posted_before en true para que nos permita pasar a borrador el pago y poder realizar cambio sobre el mismo
