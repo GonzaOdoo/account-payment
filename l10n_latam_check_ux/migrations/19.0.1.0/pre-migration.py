@@ -2,7 +2,8 @@ import logging
 
 _logger = logging.getLogger(__name__)
 def migrate(cr, version):
-    cr.execute("COMMENT ON INDEX l10n_latam_check_unique IS 'index marked to upgrade'")
+    _logger.info("Forzamos la actualización de los l10n_latam_move_check_ids_operation_date")
+    #cr.execute("COMMENT ON INDEX l10n_latam_check_unique IS 'index marked to upgrade'")
     cr.execute("""
         UPDATE l10n_latam_check
            SET payment_date = create_date::date
